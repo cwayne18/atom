@@ -101,9 +101,7 @@ class NodePlugin(snapcraft.BasePlugin):
             self.installdir, clean_target=False, keep_tarball=True)
         for pkg in self.options.node_packages:
             self.run(['npm', 'install', '-g', pkg])
-        if os.path.exists(
-                os.path.join(self.builddir, 'package.json')):
-            self.run(['npm', 'install'])
+        self.run([os.path.join(self.builddir,'script','bootstrap')])
         if self.options.gruntfile:
             self.run(['npm', 'install', '-g', 'grunt-cli'])
             self.run([os.path.join(self.installdir, 'bin', 'grunt'), "--gruntfile", os.path.join(self.builddir, self.options.gruntfile)])
